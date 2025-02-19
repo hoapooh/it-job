@@ -1,11 +1,11 @@
 import { OmitType, PartialType } from "@nestjs/mapped-types";
 import { CreateUserDto } from "./create-user.dto";
-import { IsOptional, IsString } from "class-validator";
+import { IsNotEmpty, IsString } from "class-validator";
 
-export class UpdateUserDto extends OmitType(CreateUserDto, [
-  "password",
-] as const) {
+export class UpdateUserDto extends PartialType(
+  OmitType(CreateUserDto, ["password"] as const),
+) {
   @IsString()
-  @IsOptional()
+  @IsNotEmpty({ message: "Id can not be empty" })
   _id: string;
 }
